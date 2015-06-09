@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="public/css/main.css">
+    <title>URL</title>
+  </head>
+  <body>
+    <h1>Results Data</h1>
+    <table>
+      <div>
+        請輸入URL<input type="text" id="url" size="50" value='https://www.acttab.com.au/keno/results'/>
+        <button id="urlSubmit">送出</button>
+      </div></br>
+      <div>
+      Method<select class="method">
+          <option value="1" selected>Get</option>
+          <option value="2">Put</option>
+          <option value="3">Post</option>
+          <option value="4">Delete</option>
+        </select>
+      </div></br>
+      <div id="header">Header Name</div></br>
+      <div id="parameter" >Parameter Name</div></br>
+      <div id="return">Curl Return</div></br>
+      <div>
+        請輸入regex<input type="text" id="regex" size="50" value='<td>([\d]{4}).*?<tdclass="no_site">([\d,]*)<\/td>'/>
+        <button id="regexSubmit">送出</button>
+      </div></br>
+      <div id="regexOutput">正則式output</div></br>
+    </table>
+    <script src="public/js/jquery-1.11.2.min.js"></script>
+    <script src="public/js/main.js"></script>
+  </body>
+</html>
