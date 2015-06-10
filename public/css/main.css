@@ -8,11 +8,32 @@ body {
    font-weight: 100;
    font-family: 'Lato';
 }
-#regexOutput td.title {
+#resultOutput td.title {
    color: white;
    background-color: #8a2f12;
    Align:Center;
 }
-
-.regexOutput tr td.t1 { color: blue; border-top-width: 1px; border-top-style: solid; color: black; }
-.regexOutput tr td.t3 { color: #ff653f; border-right-width: 1px; border-right-style: solid; color: black; }
+.regexOutput tr td.t1 {
+   color: blue;
+   border-top-width: 1px;
+   border-top-style: solid;
+   color: black;
+}
+.regexOutput tr td.t3 {
+   color: #ff653f;
+   border-right-width: 1px;
+   border-right-style: solid;
+   color: black;
+}
+.curlReturn {
+   width: 800px;
+   height: 100px;
+   background-color: #DCDCDC;
+   overflow: scroll;
+}
+.regexReturn {
+   width: 300px;
+   height: 400px;
+   background-color: #DCDCDC;
+   overflow: scroll;
+}
