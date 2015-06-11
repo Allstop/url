@@ -1,19 +1,53 @@
 //全域變數
 var BASE_URL = location.protocol + '//' + location.hostname,
     curlTemp = '',
-    regexTemp;
+    regexTemp,
+    headerList=[],
+    parameterList=[];
 
 $(document).on("click","#urlSubmit",function(){
     var urlValue = $("#url").val();
-    curlUrl(urlValue);
+    var methodValue = $(".method").val();
+    curlUrl(urlValue, methodValue, headerList, parameterList);
 });
 
+$(document).on("click","#headerSubmit",function(){
+    var itemArrText= [];
+    var valuArrTexte= [];
+    $('input[class="headerItem"]').each(function(){
+        itemArrText.push($(this).val());
+    });
+    $('input[class="headervalue"]').each(function(){
+        valuArrTexte.push($(this).val());
+    });
+    headerList = {
+        "item" : itemArrText,
+        "value" : valuArrTexte
+    };
+});
+
+$(document).on("click","#parameterSubmit",function(){
+    var itemArrText= [];
+    var valuArrTexte= [];
+    $('input[class="parameterItem"]').each(function(){
+        itemArrText.push($(this).val());
+    });
+    $('input[class="parametervalue"]').each(function(){
+        valuArrTexte.push($(this).val());
+    });
+    parameterList = {
+        "item" : itemArrText,
+        "value" : valuArrTexte
+    };
+});
+
+//執行第一次regex
 $(document).on("click","#regexSubmit",function(){
     var regexValue = '/'+$("#regex").val()+'/';
     regex(regexValue, curlTemp);
 });
 
-//執行regexdel事件
+//執行del/regex事件
 $(document).on("click","#regexOutput button",function(){
     var $touch=$(this).attr("class"),
         touchEvent = $touch.split('_'),
@@ -22,88 +56,55 @@ $(document).on("click","#regexOutput button",function(){
     if (plan_Event == 'del') {
         $('.'+regex_id).remove();
     } else if (plan_Event == 'regex') {
-    } else if (plan_Event == 'split1') {
-        split(1, regex_id);
-    } else if (plan_Event == 'split2') {
-        split(2, regex_id);
+        $('.secRregex_'+regex_id).html('');
+        $('.secRregex_'+regex_id).append('請輸入regex<input type="text" id="secRegex_'+regex_id+'" size="15">');
+        $('.secRregex_'+regex_id).append('<button class="secRegexSubmit_'+regex_id+'">送出</button>');
+
+    //執行第二次regex
+    } else if (plan_Event == 'secRegexSubmit') {
+        var secRegexValue = '/'+$("#secRegex_"+regex_id).val()+'/';
+        regex2(secRegexValue, regexTemp[regex_id]);
     }
 });
+
 //combine
 $(document).on("click",".combine",function(){
-    var $touch=$(this).parent().attr('id');
     output(1, 2);
 });
-function addheader() {
-    var num = document.getElementById("headerItem").rows.length;
-    var Tr = document.getElementById("headerItem").insertRow(num);
-    Td = Tr.insertCell(Tr.cells.length);
-    Td.innerHTML='<input class="headerItem" type="text">';
-    Td = Tr.insertCell(Tr.cells.length);
-    Td.innerHTML='<input class="value" type="text">';
-}
-//減少item
-function lessheader() {
-    var num = document.getElementById("headerItem").rows.length;
-    if(num >0)
-    {
-        document.getElementById("headerItem").deleteRow(-1);
-    }
-}
 
-var title = ["Header Name","value"];
-$('#header').html('');
-var $tableTitle = $('<table id="headerItem" border="0"></table>');
-var $Tr = $('<tr></tr>');
-for (var m in title ) {
-    var $Td = $('<td bgcolor="#d0dac9" width="150px">'+title[m]+'</td>');
-    $Td.text(title[m]);
-    $Tr.append($Td);
-    $tableTitle.append($Tr);
-    $('#header').append($tableTitle);
-    m++;
-}
+$(function(){
+    $("#addheader").click(function(){
+        $('#header').append('<tr><td><input class="headerItem" type="text"></td><td><input class="headervalue" type="text"></td></tr>');
+    });
+    $("#delheader").click(function(){
+        $("#header tr:last").remove();
+    });
+    $("#addparameter").click(function(){
+        $('#parameter').append('<tr><td><input class="parameterItem" type="text"></td><td><input class="parametervalue" type="text"></td></tr>');
+    });
+    $("#delparameter").click(function(){
+        $("#parameter tr:last").remove();
+    });
+})
 
-function addparameter() {
-    var num = document.getElementById("parameterItem").rows.length;
-    var Tr = document.getElementById("parameterItem").insertRow(num);
-    Td = Tr.insertCell(Tr.cells.length);
-    Td.innerHTML='<input class="parameterItem" type="text">';
-    Td = Tr.insertCell(Tr.cells.length);
-    Td.innerHTML='<input class="value" type="text">';
-}
-//減少item
-function lessparameter() {
-    var num = document.getElementById("parameterItem").rows.length;
-    if(num >0)
-    {
-        document.getElementById("parameterItem").deleteRow(-1);
-    }
-}
-
-var title = ["Parameter Name","value"];
-$('#parameter').html('');
-var $tableTitle = $('<table id="parameterItem" border="0"></table>');
-var $Tr = $('<tr></tr>');
-for (var m in title ) {
-    var $Td = $('<td width="150" bgcolor="#d0dac9">'+title[m]+'</td>');
-    $Td.text(title[m]);
-    $Tr.append($Td);
-    $tableTitle.append($Tr);
-    $('#parameter').append($tableTitle);
-    m++;
-}
-
-var curlUrl = function(urlValue) {
+var curlUrl = function(urlValue, methodValue, headerList, parameterList) {
+    console.log()
     $.ajax({
         url: BASE_URL + "/curlUrl",
         type: "POST",
         dataType: "JSON",
-        data: {urlValue: urlValue},
+        data: {urlValue:urlValue,
+               methodValue:methodValue,
+                headerList:headerList,
+                parameterList:parameterList},
         success: function (response) {
-            curlTemp = response.status;
-            $('#return').html('');
-            $('#return').append('<textarea cols="50" rows="4">'+response.status+'</textarea>');
-            //$('#return').append('<div class="curlReturn"><xmp>'+response.status+'</xmp></div>');
+            if (response.status === false) {
+                alert("請檢查參數資料!");
+            } else {
+                curlTemp = response.status;
+                $('#return').html('');
+                $('#return').append('<textarea cols="50" rows="4">'+response.status+'</textarea>');
+            }
         },
         error: function (response) {
         }
@@ -134,32 +135,45 @@ var regex = function(regexValue, Temp) {
                 $Td.append($div);
                 $Td.append('<button class="del_'+key+'">DEL</button>');
                 $Td.append('<button class="regex_'+key+'">REGEX</button>');
-                $Td.append('<button class="split1_'+key+'">SPLIT_1</button>');
-                $Td.append('<button class="split2_'+key+'">SPLIT_2</button>');
+                $Td.append('<div class="secRregex_'+key+'"></div>');
                 $('#regexOutput').append($Td);
             }
-            $('#regexOutput').append('<input type="button" class="combine" value="combine">');
+            $('#combineButton').html('');
+            $('#combineButton').append('<input type="button" class="combine" value="combine">');
         }
     })
 }
-var split = function($num, $data) {
-    console.log($num);
-    console.log(regexTemp[$data]);
+var regex2 = function(regexValue, Temp) {
     $.ajax({
-        url: BASE_URL + "/split",
+        url: BASE_URL + "/regex2",
         type: "POST",
         dataType: "JSON",
-        data: {num: $num, data: regexTemp[$data]},
+        data: {regexValue: regexValue,
+               temp: Temp},
         success: function (response) {
+            var $Td = $('<td class="' + 3 + '"></td>');
+            var $div = $('<div class="regexClass">$' + 3 + '</div>');
+            var $Tr = $('<tr></tr>');
+            var $textarea = $('<div class="regexReturn"><xmp></xmp></div>')
+            for (var key in response.status) {
+                    $textarea.append('<xmp>' + [key] + ' : ' + response.status[key] + '</xmp>');
+            }
+            $Tr.append($textarea);
+            $div.append($Tr);
+            $Td.append($div);
+            $Td.append('<button class="del_' + 3 + '">DEL</button>');
+            $Td.append('<button class="regex_' + 3 + '">REGEX</button>');
+            $Td.append('<div class="secRregex_' + 3 + '"></div>');
+            $('#regexOutput').append($Td);
         }
     })
 }
-var output = function($a, $b) {
+var output = function(a, b) {
     $.ajax({
         url: BASE_URL + "/output",
         type: "POST",
         dataType: "JSON",
-        data: {a: regexTemp[$a], b: regexTemp[$b]},
+        data: {a: regexTemp[a], b: regexTemp[b]},
         success: function (response) {
             var $table = $('<table></table>');
             $('#resultOutput').html('');
