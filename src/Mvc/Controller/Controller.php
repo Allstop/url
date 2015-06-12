@@ -32,6 +32,10 @@ class Controller
         return View::render(array('status' => $status));
     }
 
+    public function split(){
+        $status = $this->Model->split($_POST['temp'], $_POST['num']);
+        return View::render(array('status' => $status));
+    }
     public function output(){
         $status = $this->Model->output($_POST['a'], $_POST['b']);
         return View::render(array('status' => $status));

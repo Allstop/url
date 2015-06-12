@@ -8,5 +8,6 @@ $mux->any('/', ['Mvc\Controller\TemplateController', 'index']);
 $mux->post('/curlUrl', ['Mvc\Controller\Controller', 'curlUrl']);
 $mux->post('/regex', ['Mvc\Controller\Controller', 'regex']);
 $mux->post('/regex2', ['Mvc\Controller\Controller', 'regex2']);
+$mux->post('/split', ['Mvc\Controller\Controller', 'split']);
 $mux->post('/output', ['Mvc\Controller\Controller', 'output']);
 return $mux;
