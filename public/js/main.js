@@ -5,6 +5,7 @@ var BASE_URL = location.protocol + '//' + location.hostname,
     headerList=[],
     parameterList=[];
 
+//
 var ValidateNumber=function(e, pnumber){
     if (!/^\d+$/.test(pnumber))
     {
@@ -86,7 +87,7 @@ $(document).on("click",".regex-output-content button",function(){
     } else if (plan_Event == 'regex') {
         $('.sec-regex_'+regex_id).html('');
         $('.sec-regex_'+regex_id).append('請輸入regex<input type="text" class="sec-regex_'+regex_id+'-text" size="15">');
-        $('.sec-regex_'+regex_id).append('<button class="sec-regex-submit_'+regex_id+'">送出</button>');
+        $('.sec-regex_'+regex_id).append('<button class="sec-regex-submit_'+regex_id+'">submit</button>');
 
     //執行第二次regex
     } else if (plan_Event == 'sec-regex-submit') {
@@ -96,7 +97,7 @@ $(document).on("click",".regex-output-content button",function(){
         $('.sec-split_'+regex_id).html('');
         $('.sec-split_'+regex_id).append('請輸入split num<input type="text" class="split_'+regex_id+'-text" size="2" ' +
         'onkeyup="return ValidateNumber(this,value)">');
-        $('.sec-split_'+regex_id).append('<button class="split-submit_'+regex_id+'">送出</button>');
+        $('.sec-split_'+regex_id).append('<button class="split-submit_'+regex_id+'">submit</button>');
     } else if (plan_Event == 'split-submit') {
         var splitValue = $(".split_" + regex_id + "-text").val();
         split(splitValue, regexTemp[regex_id]);
@@ -181,9 +182,9 @@ var regex = function(regexValue, Temp) {
                 $Tr.append($textarea);
                 $div.append($Tr);
                 $Td.append($div);
-                $Td.append('<button class="del_' + key + '">DEL</button>');
-                $Td.append('<button class="regex_' + key + '">REGEX</button>');
-                $Td.append('<button class="split_' + key + '">SPLIT</button>');
+                $Td.append('<button class="del_' + key + '">del</button>');
+                $Td.append('<button class="regex_' + key + '">regex</button>');
+                $Td.append('<button class="split_' + key + '">split</button>');
                 $Td.append('<div class="sec-regex_' + key + '"></div>');
                 $Td.append('<div class="sec-split_' + key + '"></div>');
 
@@ -213,9 +214,9 @@ var regex2 = function(regexValue, Temp) {
             $Tr.append($textarea);
             $div.append($Tr);
             $Td.append($div);
-            $Td.append('<button class="del_' + num + '">DEL</button>');
-            $Td.append('<button class="regex_' + num + '">REGEX</button>');
-            $Td.append('<button class="split_' + num + '">SPLIT</button>');
+            $Td.append('<button class="del_' + num + '">del</button>');
+            $Td.append('<button class="regex_' + num + '">regex</button>');
+            $Td.append('<button class="split_' + num + '">split</button>');
             $Td.append('<div class="sec-regex' + num + '"></div>');
             $Td.append('<div class="sec-split_' + num + '"></div>');
             $('.regex-output-content').append($Td);
@@ -242,9 +243,9 @@ var split = function(num, Temp) {
             $Tr.append($textarea);
             $div.append($Tr);
             $Td.append($div);
-            $Td.append('<button class="del_' + num + '">DEL</button>');
-            $Td.append('<button class="regex_' + num + '">REGEX</button>');
-            $Td.append('<button class="split_' + num + '">SPLIT</button>');
+            $Td.append('<button class="del_' + num + '">del</button>');
+            $Td.append('<button class="regex_' + num + '">regex</button>');
+            $Td.append('<button class="split_' + num + '">regex</button>');
             $Td.append('<div class="sec-regex' + num + '"></div>');
             $Td.append('<div class="sec-split_' + num + '"></div>');
             $('.regex-output-content').append($Td);
@@ -260,8 +261,8 @@ var output = function(a, b) {
         success: function (response) {
             var $table = $('<table></table>');
             $('.result-output').html('');
-            $table.append('<td class="title">期數</td>');
-            $table.append('<td class="title">value</td>');
+            $table.append('<td class="title">Draw</td>');
+            $table.append('<td class="title">Value</td>');
             for (var key in response.status) {
                 var $Tr = $('<tr></tr>');
                 var $Td1 = $('<td class="t1">'+key+'</td>');

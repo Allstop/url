@@ -8,20 +8,23 @@
   <body>
     <h1>Results Data</h1>
     <div class="url-input">
-      <p>請輸入URL</p>
-      <input type="text" class="url-text" size="50">
-      <button class="url-submit">送出</button>
+      <p>PLASE ENTER URL :
+        <input type="text" class="url-text" size="50">
+        <button class="url-submit">送出</button>
+      </p>
     </div>
     <div class="method-select">
-      <p>Method</p>
-      <select class="method">
-        <option value="get" selected>Get</option>
-        <option value="put">Put</option>
-        <option value="post">Post</option>
-        <option value="delete">Delete</option>
-      </select>
+      <p>Method :
+        <select class="method">
+          <option value="get" selected>Get</option>
+          <option value="put">Put</option>
+          <option value="post">Post</option>
+          <option value="delete">Delete</option>
+        </select>
+      </p>
     </div>
     <div class="header-input">
+      <p></p>
       <table class="header-table">
         <thead>
           <tr>
@@ -30,11 +33,12 @@
           </tr>
         </thead>
       </table>
-      <button class="add-header">增加</button>
-      <button class="del-header">刪除</button>
-      <input type="submit" class="header-submit" value="送出">
+      <button class="add-header">add</button>
+      <button class="del-header">del</button>
+      <button class="header-submit">submit</button>
     </div>
     <div class="parameter-input">
+      <p></p>
       <table class="parameter-table">
         <thead>
           <tr>
@@ -43,19 +47,21 @@
           </tr>
         </thead>
       </table>
-      <button class="add-parameter">增加</button>
-      <button class="del-parameter">刪除</button>
-      <input type="submit" class="parameter-submit" value="送出">
+      <button class="add-parameter">add</button>
+      <button class="del-parameter">del</button>
+      <button class="parameter-submit">submit</button>
     </div>
-    <div class="url-output"></div>
+    <div class="url-output"><p></p></div>
     <div class="regex-input">
-      <p>請輸入regex</p>
-      <input type="text" class="regex-text" size="50">
-      <button class="regex-submit">送出</button>
+      <p>PLASE ENTER REGEX :
+        <input type="text" class="regex-text" size="50">
+        <button class="regex-submit">送出</button>
+      </p>
     </div>
     <div class="regex-output">
+      <p></p>
       <div class="regex-output-content"></div>
-      <input style="display:none" type="button" class="combine-submit" value="combine">
+      <button style="display:none" class="combine-submit">combine</button>
     </div>
     <div class="result-output"></div>
     <script src="public/js/jquery-1.11.2.min.js"></script>
