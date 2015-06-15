@@ -2,69 +2,90 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.4/darkly/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="public/css/main.css">
     <title>URL</title>
   </head>
-  <body>
-    <h1>Results Data</h1>
-    <div class="url-input">
-      <p>PLASE ENTER URL :
-        <input type="text" class="url-text" size="50">
-        <button class="url-submit">送出</button>
-      </p>
-    </div>
-    <div class="method-select">
-      <p>Method :
-        <select class="method">
-          <option value="get" selected>Get</option>
-          <option value="put">Put</option>
-          <option value="post">Post</option>
-          <option value="delete">Delete</option>
-        </select>
-      </p>
-    </div>
-    <div class="header-input">
-      <p></p>
-      <table class="header-table">
-        <thead>
-          <tr>
-            <td class="header-input-title">Header Name</td>
-            <td class="header-input-title">value</td>
-          </tr>
-        </thead>
+    <body>
+      <h1>Results Data</h1>
+      <div class="url-input form-group">
+        <div class="input-group">
+          <span class="input-group-addon">PLASE ENTER URL</span>
+          <input type="text" class="url-text form-control" value='https://www.acttab.com.au/keno/results'>
+          <span class="input-group-btn">
+            <button class="url-submit btn btn-default" type="button">Submit</button>
+          </span>
+        </div>
+      </div>
+      <div class="method-select form-group">
+        <label for="select" class="col-lg-2 control-label">Method</label>
+        <div class="col-lg-10">
+          <select class="form-control" id="select">
+            <option value="get" selected>Get</option>
+            <option value="put">Put</option>
+            <option value="post">Post</option>
+            <option value="delete">Delete</option>
+          </select>
+        </div>
+      </div>
+      <table class="data-input">
+        <tr>
+          <td valign="top" class="data-input-style">
+            <table class="header-table">
+              <td class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Header Name</h3>
+                </div>
+              </td>
+              <td class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Value</h3>
+                </div>
+              </td>
+            </table>
+            <button class="add-header btn btn-warning">add</button>
+            <button class="del-header btn btn-danger">del</button>
+            <button class="header-submit btn btn-default">submit</button>
+          </td>
+          <td valign="top" class="data-input-style">
+            <table class="parameter-table">
+              <td class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Parameter Name</h3>
+                </div>
+              </td>
+              <td class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Value</h3>
+                </div>
+              </td>
+            </table>
+
+            <button class="add-parameter btn btn-warning">add</button>
+            <button class="del-parameter btn btn-danger">del</button>
+            <button class="parameter-submit btn btn-default">submit</button>
+            </div>
+          </td>
+        </tr>
       </table>
-      <button class="add-header">add</button>
-      <button class="del-header">del</button>
-      <button class="header-submit">submit</button>
-    </div>
-    <div class="parameter-input">
-      <p></p>
-      <table class="parameter-table">
-        <thead>
-          <tr>
-            <td class="parameter-input-title">Parameter Name</td>
-            <td class="parameter-input-title">value</td>
-          </tr>
-        </thead>
-      </table>
-      <button class="add-parameter">add</button>
-      <button class="del-parameter">del</button>
-      <button class="parameter-submit">submit</button>
-    </div>
-    <div class="url-output"><p></p></div>
-    <div class="regex-input">
-      <p>PLASE ENTER REGEX :
-        <input type="text" class="regex-text" size="50">
-        <button class="regex-submit">送出</button>
-      </p>
-    </div>
-    <div class="regex-output">
-      <p></p>
-      <div class="regex-output-content"></div>
-      <button style="display:none" class="combine-submit">combine</button>
-    </div>
-    <div class="result-output"></div>
-    <script src="public/js/jquery-1.11.2.min.js"></script>
-    <script src="public/js/main.js"></script>
-  </body>
+
+
+      <div class="url-output form-group"></div>
+      <div class="regex-input form-group">
+        <div class="input-group">
+          <span class="input-group-addon">PLASE ENTER REGEX</span>
+          <input type="text" class="regex-text form-control" value='<td>([\d]{4}).*?<tdclass="no_site">([\d,]*)<\/td>'>
+          <span class="input-group-btn">
+            <button class="regex-submit btn btn-default" type="button">Submit</button>
+          </span>
+        </div>
+      </div>
+      <div class="regex-output">
+        <div class="regex-output-content"></div>
+        <button style="display:none" class="combine-submit btn btn-default">combine</button>
+      </div>
+      <div class="result-output"></div>
+      <script src="public/js/jquery-1.11.2.min.js"></script>
+      <script src="public/js/main.js"></script>
+    </body>
 </html>

@@ -34,7 +34,6 @@ class Model
         }
         $temp =preg_replace('/\s/','',curl_exec($ch));
         $temp = mb_convert_encoding($temp, 'utf-8', 'GBK,UTF-8,ASCII');
-        //$temp = preg_match('/[Ee]rror/', $temp) ? false : $temp;
         return $temp;
         $ch = curl_init();
     }

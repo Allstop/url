@@ -5,7 +5,7 @@ var BASE_URL = location.protocol + '//' + location.hostname,
     headerList=[],
     parameterList=[];
 
-//
+//spilt欄位只能輸入數字
 var ValidateNumber=function(e, pnumber){
     if (!/^\d+$/.test(pnumber))
     {
@@ -36,12 +36,13 @@ $(document).on("click",".header-submit",function(){
         "value" : valuArrTexte
     };
     $('.header-table').html("");
-    $('.header-table').append("<thead><tr><td class='header-input-title'>Header Name</td>" +
-    " <td class='header-input-title'>value</td></tr></thead>");
+    $('.header-table').append(
+      "<td class='panel panel-default'><div class='panel-heading'><h3 class='panel-title'>Header Name</h3></div></td>" +
+      "<td class='panel panel-default'><div class='panel-heading'><h3 class='panel-title'>Value</h3></div></td>");
     for (var key2 in headerList['item']) {
         var $Tr = $('<tr></tr>');
-        $Tr.append('<td>'+headerList['item'][key2]+'</td>');
-        $Tr.append('<td>'+headerList['value'][key2]+'</td>');
+        $Tr.append('<td class="panel-body">'+headerList['item'][key2]+'</td>');
+        $Tr.append('<td class="panel-body">'+headerList['value'][key2]+'</td>');
         $('.header-table').append($Tr);
     }
 });
@@ -80,27 +81,30 @@ $(document).on("click",".regex-submit",function(){
 $(document).on("click",".regex-output-content button",function(){
     var $touch=$(this).attr("class"),
         touchEvent = $touch.split('_'),
-        plan_Event=touchEvent[0],
-        regex_id = touchEvent[1];
-    if (plan_Event == 'del') {
-        $('.'+regex_id).remove();
-    } else if (plan_Event == 'regex') {
-        $('.sec-regex_'+regex_id).html('');
-        $('.sec-regex_'+regex_id).append('請輸入regex<input type="text" class="sec-regex_'+regex_id+'-text" size="15">');
-        $('.sec-regex_'+regex_id).append('<button class="sec-regex-submit_'+regex_id+'">submit</button>');
-
+      regex_Event=touchEvent[0],
+        regex_id = touchEvent[1],
+        regex_idEvent = regex_id.split(' '),
+        regex_id_num=regex_idEvent[0];
+    if (regex_Event === 'del') {
+        $('.'+regex_id_num).remove();
+    } else if (regex_Event === 'regex') {
+        $('.sec-regex_'+regex_id_num).html('');
+        $('.sec-regex_'+regex_id_num).append('<input type="text" class="sec-regex_'+regex_id_num+'-text form-control">');
+        $('.sec-regex_'+regex_id_num).append('<span class="input-group-btn">' +
+        '<button class="sec-regex-submit_'+regex_id_num+' btn btn-default" type="button">REGEX</button>');
     //執行第二次regex
-    } else if (plan_Event == 'sec-regex-submit') {
-        var secRegexValue = '/'+$(".sec-regex_"+regex_id+"-text").val()+'/';
-        regex2(secRegexValue, regexTemp[regex_id]);
-    } else if (plan_Event == 'split') {
-        $('.sec-split_'+regex_id).html('');
-        $('.sec-split_'+regex_id).append('請輸入split num<input type="text" class="split_'+regex_id+'-text" size="2" ' +
-        'onkeyup="return ValidateNumber(this,value)">');
-        $('.sec-split_'+regex_id).append('<button class="split-submit_'+regex_id+'">submit</button>');
-    } else if (plan_Event == 'split-submit') {
-        var splitValue = $(".split_" + regex_id + "-text").val();
-        split(splitValue, regexTemp[regex_id]);
+    } else if (regex_Event === 'sec-regex-submit') {
+        var secRegexValue = '/'+$(".sec-regex_"+regex_id_num+"-text").val()+'/';
+        regex2(secRegexValue, regexTemp[regex_id_num]);
+    } else if (regex_Event === 'split') {
+        $('.sec-split_'+regex_id_num).html('');
+        $('.sec-split_'+regex_id_num).append('<input type="text" class="split_'+regex_id_num+'-text form-control" ' +
+        'size="2" onkeyup="return ValidateNumber(this,value)">');
+        $('.sec-split_'+regex_id_num).append('<span class="input-group-btn">' +
+        '<button class="split-submit_'+regex_id_num+' btn btn-default" type="button">SPLIT</button>');
+    } else if (regex_Event === 'split-submit') {
+        var splitValue = $(".split_" + regex_id_num + "-text").val();
+        split(splitValue, regexTemp[regex_id_num]);
     }
 });
 
@@ -109,9 +113,11 @@ $(document).on("click",".combine-submit",function(){
     var $childrenArray = [];
     var $children;
     $(this).prev().children().each(function(){
-        $children = $(this).attr('class');
-        $childrenArray.push($children);
+        $children = $(this).attr('class'),
+        childrenEvent = $children.split(' ');
+        $childrenArray.push(childrenEvent[0]);
     });
+    console.log($childrenArray);
     if ($childrenArray.length !== 2) {
         alert("請確認combine數量,應為2");
     } else {
@@ -119,17 +125,17 @@ $(document).on("click",".combine-submit",function(){
     }
 
 });
-
+//add&del
 $(function(){
     $(".add-header").click(function(){
-        $('.header-table').append('<tr><td><input class="header-item" type="text"></td>' +
+        $('.header-table').append('<tr class="active"><td><input class="header-item" type="text"></td>' +
         '<td><input class="header-value" type="text"></td></tr>');
     });
     $(".del-header").click(function(){
         $(".header-table tr:last").remove();
     });
     $(".add-parameter").click(function(){
-        $('.parameter-table').append('<tr><td><input class="parameter-item" type="text"></td>' +
+        $('.parameter-table').append('<tr class="active"><td><input class="parameter-item" type="text"></td>' +
         '<td><input class="parameter-value" type="text"></td></tr>');
     });
     $(".del-parameter").click(function(){
@@ -152,7 +158,8 @@ var curlUrl = function(urlValue, methodValue, headerList, parameterList) {
             } else {
                 curlTemp = response.status;
                 $('.url-output').html('');
-                $('.url-output').append('<textarea cols="50" rows="4">'+response.status+'</textarea>');
+                $('.url-output').append('<div class="col-lg-10"><textarea class="form-control" rows="3" ' +
+                'style="margin: 0px -4.84375px 0px 0px; width: 428px; height: 96px;">'+response.status+'</textarea></div>');
             }
         },
         error: function (response) {
@@ -172,21 +179,21 @@ var regex = function(regexValue, Temp) {
             $('.regex-output-content').html('');
             for (var key in response.status) {
                 var data = response.status;
-                var $Td = $('<td class="'+key+'"></td>');
-                var $div = $('<div class="regex-output-category">$'+key+'</div>');
+                var $Td = $('<td class="'+key+' panel-title"></td>');
+                var $div = $('<div class="regex-output-category panel panel-info">$'+key+'</div>');
                 var $Tr = $('<tr></tr>');
-                var $textarea = $('<div class="regex-output-item"></div>')
+                var $textarea = $('<div class="regex-output-item panel-body"></div>')
                 for (var key2 in data[key]) {
                     $textarea.append('<xmp>'+[key2]+' : '+data[key][key2]+'</xmp>');
                 }
                 $Tr.append($textarea);
                 $div.append($Tr);
                 $Td.append($div);
-                $Td.append('<button class="del_' + key + '">del</button>');
-                $Td.append('<button class="regex_' + key + '">regex</button>');
-                $Td.append('<button class="split_' + key + '">split</button>');
-                $Td.append('<div class="sec-regex_' + key + '"></div>');
-                $Td.append('<div class="sec-split_' + key + '"></div>');
+                $Td.append('<button class="del_' + key + ' btn btn-danger">del</button>');
+                $Td.append('<button class="regex_' + key + ' btn btn-info">regex</button>');
+                $Td.append('<button class="split_' + key + ' btn btn-primary">split</button>');
+                $Td.append('<div class="sec-regex_' + key + ' input-group"></div>');
+                $Td.append('<div class="sec-split_' + key + ' input-group"></div>');
 
                 $('.regex-output-content').append($Td);
             }
@@ -214,11 +221,11 @@ var regex2 = function(regexValue, Temp) {
             $Tr.append($textarea);
             $div.append($Tr);
             $Td.append($div);
-            $Td.append('<button class="del_' + num + '">del</button>');
-            $Td.append('<button class="regex_' + num + '">regex</button>');
-            $Td.append('<button class="split_' + num + '">split</button>');
-            $Td.append('<div class="sec-regex' + num + '"></div>');
-            $Td.append('<div class="sec-split_' + num + '"></div>');
+            $Td.append('<button class="del_' + num + ' btn btn-danger">del</button>');
+            $Td.append('<button class="regex_' + num + '  btn btn-info">regex</button>');
+            $Td.append('<button class="split_' + num + ' btn btn-primary">split</button>');
+            $Td.append('<div class="sec-regex' + num + ' input-group"></div>');
+            $Td.append('<div class="sec-split_' + num + ' input-group"></div>');
             $('.regex-output-content').append($Td);
         }
     })
@@ -243,11 +250,11 @@ var split = function(num, Temp) {
             $Tr.append($textarea);
             $div.append($Tr);
             $Td.append($div);
-            $Td.append('<button class="del_' + num + '">del</button>');
-            $Td.append('<button class="regex_' + num + '">regex</button>');
-            $Td.append('<button class="split_' + num + '">regex</button>');
-            $Td.append('<div class="sec-regex' + num + '"></div>');
-            $Td.append('<div class="sec-split_' + num + '"></div>');
+            $Td.append('<button class="del_' + num + ' btn btn-danger">del</button>');
+            $Td.append('<button class="regex_' + num + '  btn btn-info">regex</button>');
+            $Td.append('<button class="split_' + num + ' btn btn-primary">split</button>');
+            $Td.append('<div class="sec-regex' + num + ' input-group"></div>');
+            $Td.append('<div class="sec-split_' + num + ' input-group"></div>');
             $('.regex-output-content').append($Td);
         }
     })
@@ -259,15 +266,15 @@ var output = function(a, b) {
         dataType: "JSON",
         data: {a: regexTemp[a], b: regexTemp[b]},
         success: function (response) {
-            var $table = $('<table></table>');
+            var $table = $('<table class="table table-striped table-hover"></table>');
             $('.result-output').html('');
-            $table.append('<td class="title">Draw</td>');
-            $table.append('<td class="title">Value</td>');
+            $table.append('<thead><tr class="success"><th class="title">Draw</th><th class="title">Value</th></tr>' +
+            '</thead>');
             for (var key in response.status) {
                 var $Tr = $('<tr></tr>');
-                var $Td1 = $('<td class="t1">'+key+'</td>');
+                var $Td1 = $('<td>'+key+'</td>');
                 $Tr.append($Td1);
-                var $Td2 = $('<td class="t3">'+response.status[key]+'</td>');
+                var $Td2 = $('<td>'+response.status[key]+'</td>');
                 $Tr.append($Td2);
                 $table.append($Tr);
                 $('.result-output').append($table);
