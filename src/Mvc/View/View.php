@@ -1,5 +1,6 @@
 <?php
 namespace Mvc\View;
+
 class View
 {
     public static function render($data)
