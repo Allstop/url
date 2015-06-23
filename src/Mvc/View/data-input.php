@@ -1,0 +1,38 @@
+<table class="data-input">
+    <tr>
+        <td valign="top" class="data-input-style">
+            <table class="header-table">
+                <td class="panel panel-active">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Header Name</h3>
+                    </div>
+                </td>
+                <td class="panel panel-active">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Value</h3>
+                    </div>
+                </td>
+            </table>
+            <button class="add-header btn btn-warning">add</button>
+            <button class="del-header btn btn-danger">del</button>
+            <button class="header-submit btn btn-default">submit</button>
+        </td>
+        <td valign="top" class="data-input-style">
+            <table class="parameter-table">
+                <td class="panel panel-active">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Parameter Name</h3>
+                    </div>
+                </td>
+                <td class="panel panel-active">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Value</h3>
+                    </div>
+                </td>
+            </table>
+            <button class="add-parameter btn btn-warning">add</button>
+            <button class="del-parameter btn btn-danger">del</button>
+            <button class="parameter-submit btn btn-default">submit</button>
+        </td>
+    </tr>
+</table>

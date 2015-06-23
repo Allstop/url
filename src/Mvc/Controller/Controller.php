@@ -20,17 +20,12 @@ class Controller
 
     public function curlUrl()
     {
-        if (!empty(self::$data->getData()['hItem'])) {
-            $header = array_combine(self::$data->getData()['hItem'], self::$data->getData()['hValue']);
-        } else {
-            $header = '';
-        }
-        if (!empty(self::$data->getData()['pItem'])) {
-            $parameter = array_combine(self::$data->getData()['pItem'], self::$data->getData()['pValue']);
-        } else {
-            $parameter = '';
-        }
-        $status = $this->Model->curlUrl(self::$data->getData()['urlValue'], self::$data->getData()['methodValue'], $header,  $parameter);
+        $status = $this->Model->curlUrl(
+            self::$data->getData()['urlValue'],
+            self::$data->getData()['methodValue'],
+            self::$data->getData()['headerList'],
+            self::$data->getData()['parameterList']
+        );
         return View::render(array('status' => $status));
     }
 

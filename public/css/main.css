@@ -5,6 +5,9 @@ body {
 div *{
    margin:0;
 }
+#select {
+    width: 80px;
+}
 .data-input-style {
    position: relative;
    min-height: 1px;

@@ -6,14 +6,16 @@
         <title>URL</title>
     </head>
     <body>
-        <h1>Results Data</h1>
-        <?php echo $urlInput ?>
-        <?php echo $methodInput ?>
-        <?php echo $dataInput ?>
-        <div class="url-output form-group"></div>
-        <?php echo $regexInput ?>
-        <div class="regex-output"></div>
-        <div class="result-output"></div>
+        <form action="'.$file.'" method="post">
+            <h1>Results Data</h1>
+            <?php echo $urlInput ?>
+            <?php echo $methodInput ?>
+            <?php echo $dataInput ?>
+            <div class="url-output form-group"></div>
+            <?php echo $regexInput ?>
+            <div class="regex-output"></div>
+            <div class="result-output"></div>
+        </form>
         <script src="public/js/jquery-1.11.2.min.js"></script>
         <script src="public/js/main.js"></script>
     </body>
@@ -25,6 +27,5 @@ $urlInput = include('src/Mvc/View/url-input.php');
 $methodInput = include('src/Mvc/View/method-input.php');
 $dataInput = include('src/Mvc/View/data-input.php');
 $regexInput = include('src/Mvc/View/regex-input.php');
-
 
 ?>

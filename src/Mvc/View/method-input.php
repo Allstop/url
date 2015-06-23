@@ -1,0 +1,11 @@
+<div class="method-select form-group">
+    <label for="select" class="col-lg-2 control-label">Method</label>
+    <div class="col-lg-10">
+        <select class="form-control method" id="select">
+            <option value="get" selected>Get</option>
+            <option value="put">Put</option>
+            <option value="post">Post</option>
+            <option value="delete">Delete</option>
+        </select>
+    </div>
+</div>
