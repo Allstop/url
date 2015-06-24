@@ -2,9 +2,7 @@ body {
    margin: 5%;
    padding: 0;
 }
-div *{
-   margin:0;
-}
+
 #select {
     width: 80px;
 }
@@ -13,12 +11,7 @@ div *{
    min-height: 1px;
    padding-right: 30px;
 }
-.curl-output {
-   width: 800px;
-   height: 100px;
-   background-color: #DCDCDC;
-   overflow: scroll;
-}
+
 .regex-output-category {
    width: 400px;
    height: 400px;

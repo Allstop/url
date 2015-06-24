@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.4/darkly/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="public/css/main.css">
+        <title>URL</title>
+    </head>
+    <body>
+        <h1>Results Data</h1>
+        <div>{{ include('url-input.html') }}</div>
+        <div>{{ include('method-input.html') }}</div>
+        <div>{{ include('data-input.html') }}</div>
+        <div>{{ include('url-input.html') }}</div>
+        <!--<div>{{ include('url-output.html') }}</div>-->
+        <div>{{ include('regex-input.html') }}</div>
+        <!--<div>{{ include('regex-output.html') }}</div>-->
+        <!--<div>{{ include('result-output.html') }}</div>-->
+        <script src="public/js/jquery-1.11.2.min.js"></script>
+        <script src="public/js/main.js"></script>
+    </body>
+</html>

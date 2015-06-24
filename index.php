@@ -1,30 +1,10 @@
-<html>
-    <head>
-        <meta charset="utf-8">
-        <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.4/darkly/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="public/css/main.css">
-        <title>URL</title>
-    </head>
-    <body>
-        <h1>Results Data</h1>
-        <?php echo $urlInput ?>
-        <?php echo $methodInput ?>
-        <?php echo $dataInput ?>
-        <div class="url-output form-group"></div>
-        <?php echo $regexInput ?>
-        <div class="regex-output"></div>
-        <div class="result-output"></div>
-        <script src="public/js/jquery-1.11.2.min.js"></script>
-        <script src="public/js/main.js"></script>
-    </body>
-</html>
-
 <?php
+// 自動載入類別
+require 'vendor/autoload.php';
+use Pux\Executor;
 
-$urlInput = include('src/Mvc/View/url-input.php');
-$methodInput = include('src/Mvc/View/method-input.php');
-$dataInput = include('src/Mvc/View/data-input.php');
-$regexInput = include('src/Mvc/View/regex-input.php');
+$mux = require "router/route.php";
 
+$route = $mux->dispatch($_SERVER['DOCUMENT_URI']);
 
-?>
+echo Executor::execute($route);

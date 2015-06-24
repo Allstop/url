@@ -3,9 +3,11 @@ namespace Mvc\Controller;
 
 use Mvc\Model\Model;
 use Mvc\View\View;
+use Mvc\Core\Con;
+use Mvc\Core\Template;
 use Mvc\Core\Data;
 
-class Controller
+class Controller extends Con
 {
 
     private $Model = null;
@@ -14,8 +16,15 @@ class Controller
 
     public function __construct()
     {
+        Controller::init();
         $this->Model = Model::init();
         self::$data = new Data();
+        $this->action = isset($_GET['act']) ? strtolower($_GET['act']) : 'index';
+    }
+
+    public function index()
+    {
+        return Template::render();
     }
 
     public function curlUrl()
@@ -26,13 +35,14 @@ class Controller
             self::$data->getData()['headerList'],
             self::$data->getData()['parameterList']
         );
-        return View::render(array('status' => $status));
+        return Template::render('url-output.html', array('curl_output' => $status ));
+
     }
 
     public function regex()
     {
         $status = $this->Model->regex(self::$data->getData()['temp'], self::$data->getData()['regexValue']);
-        return View::render(array('status' => $status));
+        return Template::render('regex-output.html', array('regex_output' => $status ));
     }
 
     public function regex2()

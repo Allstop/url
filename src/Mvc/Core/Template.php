@@ -1,5 +1,5 @@
 <?php
-namespace Mvc\View;
+namespace Mvc\Core;
 
 class Template
 {
@@ -19,7 +19,7 @@ class Template
     {
         return self::$twig;
     }
-    public static function render($filename = 'index.html', $array = array())
+    public static function render($filename = 'main.html', $array = array())
     {
         if (self::$twig != null) {
             return ($array) ? self::$twig->render($filename, $array) : self::$twig->render($filename);
@@ -30,5 +30,10 @@ class Template
     public static function getPath()
     {
         return self::$path;
+    }
+
+    public static function urlOutput($data)
+    {
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 }
