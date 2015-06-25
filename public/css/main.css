@@ -6,6 +6,14 @@ body {
 #select {
     width: 80px;
 }
+textarea {
+    vertical-align:text-top;
+    width: 320px;
+    border:2px solid;
+}
+.panel-title {
+    vertical-align:text-top;
+}
 .data-input-style {
    position: relative;
    min-height: 1px;
@@ -13,16 +21,12 @@ body {
 }
 
 .regex-output-category {
-   width: 400px;
-   height: 400px;
-   /*background-color: #dbd7ff;*/
-   overflow: scroll;
+    vertical-align:text-top;
+    text-align: right;
 }
 .result-output td.title {
    text-align:center;
    width: 175px;
-   /*color: white;*/
-   /*background-color: #993514;*/
    Align:Center;
 }
 .result-output tr td.t1 {

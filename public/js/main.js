@@ -16,3 +16,15 @@ $(function(){
         $(".parameter-table tr:last").remove();
     });
 });
+
+$(document).on("click",".regex-output-content button",function(){
+    var $touch=$(this).attr("class"),
+        touchEvent = $touch.split(' '),
+        regex_Event=touchEvent[0],
+        regex_Event = regex_Event.split('-'),
+        regex_name=regex_Event[0],
+        regex_id=regex_Event[1];
+    if (regex_name === 'del') {
+        $('.'+regex_id).remove();
+    }
+});

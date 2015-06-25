@@ -47,18 +47,30 @@ class Controller extends Con
 
     public function regex2()
     {
-        $status = $this->Model->regex2(self::$data->getData()['temp'], self::$data->getData()['regexValue']);
-        return View::render(array('status' => $status));
+
+        if (isset(self::$data->getData()['regexValue'])) {
+            var_dump(self::$data->getData()['regexValue']);
+            $status = $this->Model->regex2(self::$data->getData()['temp'], self::$data->getData()['regexValue']);
+            return Template::render('regex-output.html', array('regex2_output' => $status));
+        }
     }
 
     public function split()
     {
-        $status = $this->Model->split(self::$data->getData()['temp'], self::$data->getData()['num']);
-        return View::render(array('status' => $status));
+        if (isset(self::$data->getData()['num'])) {
+            var_dump(self::$data->getData()['num']);
+            $status = $this->Model->split(self::$data->getData()['temp'], self::$data->getData()['num']);
+            return Template::render('regex-output.html', array('split_output' => $status ));
+        }
     }
     public function output()
     {
-        $status = $this->Model->output(self::$data->getData()['a'], self::$data->getData()['b']);
-        return View::render(array('status' => $status));
+        if (isset(self::$data->getData()['1']) and !isset(self::$data->getData()['2'])) {
+            $status = $this->Model->output(self::$data->getData()['0'], self::$data->getData()['1']);
+            return Template::render('com-output.html', array('com_output' => $status ));
+        } else {
+            echo 'error';
+        }
+
     }
 }

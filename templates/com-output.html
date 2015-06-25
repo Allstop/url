@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+
+{% block output %}
+<table class="table table-striped table-hover">
+    <thead>
+        <tr class="success">
+            <th class="title">Draw</th>
+            <th class="title">Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for key,value in com_output %}
+            <tr>
+                <td>1{{ key }}</td>
+                <td>2{{ value }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock output %}
+

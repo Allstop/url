@@ -1,6 +1,7 @@
 {% extends 'main.html' %}
 
 {% block body %}
+<form action="/regex" method="post">
     <div class="url-output">
         <div class="col-lg-10">
             <textarea class="form-control" rows="10" name="temp">{{ curl_output }}</textarea>
@@ -15,4 +16,5 @@
             </span>
         </div>
     </div>
+</form>
 {% endblock %}

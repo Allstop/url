@@ -12,9 +12,7 @@
             {{ include('method-input.html') }}
             {{ include('data-input.html') }}
         </form>
-        <form action="/regex" method="post">
-            {% block body %}{% endblock body %}
-        </form>
+        {% block body %}{% endblock body %}
         {% block output %}{% endblock output %}
         <script src="public/js/jquery-1.11.2.min.js"></script>
         <script src="public/js/main.js"></script>
