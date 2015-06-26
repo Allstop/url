@@ -1,9 +1,56 @@
-<div class="url-input form-group">
-    <div class="input-group">
-        <span class="input-group-addon">PLASE ENTER URL</span>
-        <input type="text" class="url-text form-control" name="urlValue" value='https://www.acttab.com.au/keno/results'>
-        <span class="input-group-btn">
-            <input class="url-submit btn btn-default" type="submit" value="Submit"/>
-        </span>
+<form action="/curlUrl" method="post">
+    <div class="url-input form-group">
+        <div class="input-group">
+            <span class="input-group-addon">PLASE ENTER URL</span>
+            <input type="text" class="url-text form-control" name="url" value='https://www.acttab.com.au/keno/results'>
+            <span class="input-group-btn">
+                <input class="url-submit btn btn-default" type="submit" value="Submit"/>
+            </span>
+        </div>
     </div>
-</div>
+    <div class="method-select form-group">
+        <label for="select" class="col-lg-2 control-label">Method</label>
+        <div class="col-lg-10">
+            <select class="form-control method" name="method" id="select">
+                <option value="get" selected>Get</option>
+                <option value="put">Put</option>
+                <option value="post">Post</option>
+                <option value="delete">Delete</option>
+            </select>
+        </div>
+    </div>
+    <table class="data-input">
+        <tr>
+            <td valign="top" class="data-input-style">
+                <table class="header-table">
+                    <td class="panel panel-active">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Header Name</h3>
+                        </div>
+                    </td>
+                    <td class="panel panel-active">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Value</h3>
+                        </div>
+                    </td>
+                </table>
+                <button class="add-header btn btn-warning" type="button">add</button>
+                <button class="del-header btn btn-danger" type="button">del</button>
+                <table class="parameter-table">
+                    <td class="panel panel-active">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Parameter Name</h3>
+                        </div>
+                    </td>
+                    <td class="panel panel-active">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Value</h3>
+                        </div>
+                    </td>
+                </table>
+                <button class="add-parameter btn btn-warning" type="button">add</button>
+                <button class="del-parameter btn btn-danger" type="button">del</button>
+            </td>
+        </tr>
+    </table>
+</form>

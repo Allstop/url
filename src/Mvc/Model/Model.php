@@ -13,34 +13,38 @@ class Model
         return static::$model;
     }
 
-    public function curlUrl($url, $method, $headerData, $parameterData)
+    public function curlUrl($url, $method, $header_data, $parameter_data)
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_URL, $url);
-        if ($headerData) {
-            curl_setopt($ch, CURLOPT_HTTPHEADER, http_build_query($headerData));
+        if ($header_data) {
+            $_data = array_combine($header_data['item'], $header_data['value']);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, http_build_query($_data));
         }
         curl_setopt($ch, CURLOPT_HEADER, false);
         if ($method === 'get') {
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
         }
         if ($method === 'put') {
-            if ($parameterData) {
+            if ($parameter_data) {
+                $_data = array_combine($parameter_data['item'], $parameter_data['value']);
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($parameterData));
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($_data));
             }
         }
         if ($method === 'post') {
-            if ($parameterData) {
+            if ($parameter_data) {
+                $_data = array_combine($parameter_data['item'], $parameter_data['value']);
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($parameterData));
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($_data));
             }
         }
         if ($method === 'delete') {
-            if ($parameterData) {
+            if ($parameter_data) {
+                $_data = array_combine($parameter_data['item'], $parameter_data['value']);
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
-                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($parameterData));
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($_data));
             }
         }
         $temp = preg_replace('/\s/', '', curl_exec($ch));
@@ -49,16 +53,16 @@ class Model
         $ch = curl_init();
     }
 
-    public function regex($temp, $regexValue)
+    public function regex($temp, $regex_value)
     {
-        preg_match_all($regexValue, $temp, $mat);
+        preg_match_all($regex_value, $temp, $mat);
         return $mat;
     }
 
-    public function regex2($temp, $regexValue)
+    public function regex2($temp, $regex_value)
     {
         foreach ($temp as $key => $value) {
-            preg_match_all($regexValue, $value, $ans);
+            preg_match_all($regex_value, $value, $ans);
             $arr[$key] = implode(',', $ans[1]);
         }
         return $arr;
@@ -67,9 +71,11 @@ class Model
     public function split($temp, $num)
     {
         foreach ($temp as $key => $value) {
-            $temp[$key] = implode(',', str_split($temp[$key], $num));
+            foreach ($value as $key2 => $value2) {
+                $arr[$key2] = implode(',', str_split($value[$key2], $num));
+            }
         }
-        return $temp;
+        return array($key=>$arr);
     }
 
     public function output($a, $b)

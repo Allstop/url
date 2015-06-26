@@ -7,13 +7,9 @@
     </head>
     <body>
         <h1>Results Data</h1>
-        <form action="/curlUrl" method="post">
-            {{ include('url-input.html') }}
-            {{ include('method-input.html') }}
-            {{ include('data-input.html') }}
-        </form>
-        {% block body %}{% endblock body %}
-        {% block output %}{% endblock output %}
+        {{ include('url-input.html') }}
+        {% block content %}content{% endblock content %}
+        {% block output %}output{% endblock output %}
         <script src="public/js/jquery-1.11.2.min.js"></script>
         <script src="public/js/main.js"></script>
     </body>

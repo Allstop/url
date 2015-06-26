@@ -8,8 +8,10 @@ body {
 }
 textarea {
     vertical-align:text-top;
-    width: 320px;
-    border:2px solid;
+    width:300px;
+    overflow-y:visible;
+    border:1px solid;
+
 }
 .panel-title {
     vertical-align:text-top;
