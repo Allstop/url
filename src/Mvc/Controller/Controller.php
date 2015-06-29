@@ -8,7 +8,6 @@ use Mvc\Core\Data;
 
 class Controller extends Con
 {
-
     private $Model = null;
 
     public static $data = null;
@@ -18,7 +17,6 @@ class Controller extends Con
         Controller::init();
         $this->Model = Model::init();
         self::$data = new Data();
-        $this->action = isset($_GET['act']) ? strtolower($_GET['act']) : 'index';
     }
 
     public function index()
@@ -35,20 +33,25 @@ class Controller extends Con
             self::$data->getData()['parameter']
         );
         return Template::render('url-output.html', array('curl_output' => $status));
-
     }
 
     public function regex()
     {
-        $status = $this->Model->regex(self::$data->getData()['temp'], self::$data->getData()['regex']);
-        return Template::render('com-output.html', array('regex_output' => $status));
+        if (! empty(self::$data->getData()['regex'])) {
+            $status = $this->Model->regex(self::$data->getData()['temp'], self::$data->getData()['regex']);
+            return Template::render('com-output.html', array('regex_output' => $status));
+        }
     }
 
     public function regex2()
     {
-
-        if (isset(self::$data->getData()['regex'])) {
-            $status = $this->Model->regex2(self::$data->getData()['temp'], self::$data->getData()['regex']);
+        foreach (self::$data->getData()['regex'] as $key => $value) {
+            ! empty(self::$data->getData()['regex'][$key])
+            and $regex_value=self::$data->getData()['regex'][$key]
+            and $temp=self::$data->getData()['temp'][$key];
+        }
+        if (! empty($regex_value)) {
+            $status = $this->Model->regex2($temp, $regex_value);
             $result = array_merge(self::$data->getData()['temp'], $status);
             return Template::render('com-output.html', array('regex_output' => $result));
         }
@@ -56,20 +59,27 @@ class Controller extends Con
 
     public function split()
     {
-            $status = $this->Model->split(self::$data->getData()['temp'], self::$data->getData()['num']);
-            $result = array_merge(self::$data->getData()['temp'], $status);
+        foreach (self::$data->getData()['num'] as $key => $value) {
+            ! empty(self::$data->getData()['num'][$key])
+            and $num = self::$data->getData()['num'][$key]
+            and $temp = self::$data->getData()['temp'][$key];
+        }
+        if (! empty($num)) {
+            $status = $this->Model->split($temp, $num);
+            $result = array_merge(self::$data->getData()['temp'], array($status));
             return Template::render('com-output.html', array('regex_output' => $result));
+        }
     }
 
     public function output()
     {
-        if (isset(self::$data->getData()['1']) and !isset(self::$data->getData()['2'])) {
-            $status = $this->Model->output(self::$data->getData()['0'], self::$data->getData()['1']);
-            return Template::render('com-output.html', array('regex_output' => self::$data->getData(),
-                                                             'com_output' => $status));
-        } else {
-            return Template::render('com-output.html', array('com_output' => 'error'));
-        }
-
+        isset(self::$data->getData()['1']) and
+        ! isset(self::$data->getData()['2']) and
+        $status = $this->Model->output(self::$data->getData()['0'], self::$data->getData()['1']);
+        return Template::render(
+            'com-output.html',
+            array('regex_output' => self::$data->getData(), 'com_output' => $status
+            )
+        );
     }
 }

@@ -1,5 +1,5 @@
 <?php
-// 自動載入類別
+
 require 'vendor/autoload.php';
 use Pux\Executor;
 
