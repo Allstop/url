@@ -1,42 +1,54 @@
 {% block content %}
 
-<form method="post">
-{% for key,value in regex_output %}
-<td class="{{ key }} panel-title">
-
-        <div class="regex-output-category panel panel-info">
-            {% for key2,value2 in value %}
-            {{ key2 }}:<textarea>{{ value2 }}</textarea><br>
-            {% endfor %}
-            {% for key2,value2 in value %}
-            <input type="hidden" name="temp[{{ key }}][]" value="{{ value2 }}">
-            {% endfor %}
-
-        </div>
-        <button class="del-{{ key }} btn btn-danger" type="button">del</button>
-        <button onclick="document.getElementById('r-{{ key }}').style.display=''"
-                class="regex-{{ key }} btn btn-info" type="button">regex
-        </button>
-        <button onclick="document.getElementById('s-{{ key }}').style.display=''"
-                class="split-{{ key }} btn btn-primary" type="button">split
-        </button>
-        <div id="r-{{ key }}" style="display: none" class="sec-regex-{{ key }} input-group">
-            <input type="text" class="sec-regex-{{ key }}-text form-control" name="regex">
+<div class="regex-output">
+    <div class="regex-output-content">
+        <table>
+            <form method="post">
+                {% for key,value in regex_output %}
+                <td class="{{ key }} panel-title">
+                    <div class="regex-output-category panel panel-info">
+                        {% for key2,value2 in value %}
+                        {{ key2 }}:<textarea>{{ value2 }}</textarea><br>
+                        {% endfor %}
+                        {% for key2,value2 in value %}
+                        <input type="hidden" name="temp[{{ key }}][]" value="{{ value2 }}">
+                        {% endfor %}
+                    </div>
+                    <button class="del-{{ key }} btn btn-danger" type="button">del</button>
+                    <button onclick="document.getElementById('r-{{ key }}').style.display=''"
+                            class="regex-{{ key }} btn btn-info" type="button">regex
+                    </button>
+                    <button onclick="document.getElementById('s-{{ key }}').style.display=''"
+                            class="split-{{ key }} btn btn-primary" type="button">split
+                    </button>
+                    <div id="r-{{ key }}" style="display: none" class="sec-regex-{{ key }} input-group">
+                        <input type="text" class="sec-regex-{{ key }}-text form-control" name="regex[{{ key }}]">
                 <span class="input-group-btn">
                     <input type="button" class="sec-regex-submit-{{ key }} btn btn-default" value="REGEX"
                            onClick="this.form.action='/regex2';this.form.submit();">
                 </span>
-        </div>
-        <div id="s-{{ key }}" style="display: none" class="sec-split-{{ key }} input-group">
-            <input type="text" class="split-{{ key }}-text form-control" size="2" name="num">
+                    </div>
+                    <div id="s-{{ key }}" style="display: none" class="sec-split-{{ key }} input-group">
+                        <input type="text" class="split-{{ key }}-text form-control" size="2" name="num[{{ key }}]">
                 <span class="input-group-btn">
                     <input type="button" class="split-submit-{{ key }} btn btn-default" value="SPLIT"
                            onClick="this.form.action='/split';this.form.submit();">
                 </span>
-        </div>
-
-</td>
-{% endfor %}
-</form>
+                    </div>
+                </td>
+                {% endfor %}
+            </form>
+        </table>
+        <form action="/output" method="post">
+            {% for key,value in regex_output %}
+            <div class="{{ key }}">
+                {% for key2,value2 in value %}
+                <input type="hidden" name="{{ key }}[]" value="{{ value2 }}">
+                {% endfor %}
+            </div>
+            {% endfor %}
+            <input class="combine-submit btn btn-defaul" type="submit" value="combine"/>
+        </form>
+    </div>
+</div>
 {% endblock content %}
-

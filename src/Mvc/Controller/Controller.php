@@ -49,34 +49,26 @@ class Controller extends Con
 
         if (isset(self::$data->getData()['regex'])) {
             $status = $this->Model->regex2(self::$data->getData()['temp'], self::$data->getData()['regex']);
-            return Template::render(
-                'com-output.html',
-                array('sec_output' => array_replace(self::$data->getData()['temp'], $status))
-            );
+            $result = array_merge(self::$data->getData()['temp'], $status);
+            return Template::render('com-output.html', array('regex_output' => $result));
         }
     }
 
     public function split()
     {
-
-        if (isset(self::$data->getData()['num'])) {
             $status = $this->Model->split(self::$data->getData()['temp'], self::$data->getData()['num']);
-            return Template::render(
-                'com-output.html',
-                array('sec_output' => array_replace(self::$data->getData()['temp'], $status))
-            );
-        }
+            $result = array_merge(self::$data->getData()['temp'], $status);
+            return Template::render('com-output.html', array('regex_output' => $result));
     }
 
     public function output()
     {
-
         if (isset(self::$data->getData()['1']) and !isset(self::$data->getData()['2'])) {
             $status = $this->Model->output(self::$data->getData()['0'], self::$data->getData()['1']);
             return Template::render('com-output.html', array('regex_output' => self::$data->getData(),
                                                              'com_output' => $status));
         } else {
-            return Template::render('com-output.html', array('com_output' => ''));
+            return Template::render('com-output.html', array('com_output' => 'error'));
         }
 
     }

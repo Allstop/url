@@ -61,21 +61,32 @@ class Model
 
     public function regex2($temp, $regex_value)
     {
-        foreach ($temp as $key => $value) {
-            preg_match_all($regex_value, $value, $ans);
-            $arr[$key] = implode(',', $ans[1]);
+        foreach ($regex_value as $key => $value) {
+            if (!empty($regex_value[$key])) {
+                foreach ($temp[$key] as $key2 => $value2) {
+                    preg_match_all($regex_value[$key], $value2, $ans);
+                    foreach ($ans as $key3 => $value3) {
+                        if ($key3!== 0) {
+                            $arr[$key3][$key2] = implode(',', $ans[$key3]);
+                        }
+                    }
+                }
+            }
         }
         return $arr;
     }
 
     public function split($temp, $num)
     {
-        foreach ($temp as $key => $value) {
-            foreach ($value as $key2 => $value2) {
-                $arr[$key2] = implode(',', str_split($value[$key2], $num));
+        foreach ($num as $key => $value) {
+            if (!empty($num[$key])) {
+                foreach ($temp[$key] as $key2 => $value2) {
+                    $arr[$key2] = implode(',', str_split($temp[$key][$key2], $num[$key]));
+                }
             }
         }
-        return array($key=>$arr);
+
+        return array($arr);
     }
 
     public function output($a, $b)
