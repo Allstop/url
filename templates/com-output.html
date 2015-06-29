@@ -1,0 +1,26 @@
+{% extends 'main.html' %}
+
+{% use "regex-output.html" with content as parent_content %}
+{% block content %}
+{{ block('parent_content') }}
+{% endblock %}
+
+{% block output %}
+<table class="table table-striped table-hover">
+    <thead>
+        <tr class="success">
+            <th class="title">Draw</th>
+            <th class="title">Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for key,value in com_output %}
+        <tr>
+            <td>{{ key }}</td>
+            <td>{{ value }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+

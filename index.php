@@ -1,12 +1,9 @@
 <?php
 
-require "vendor/autoload.php";
-
+require 'vendor/autoload.php';
 use Pux\Executor;
 
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Credentials: true');
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+header("X-XSS-Protection: 0");
 
 $mux = require "router/route.php";
 

@@ -1,0 +1,20 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<form action="/regex" method="post">
+    <div class="url-output">
+        <div class="col-lg-10">
+            <textarea class="form-control" rows="10" name="temp">{{ curl_output }}</textarea>
+        </div>
+    </div>
+    <div class="regex-input form-group">
+        <div class="input-group">
+            <span class="input-group-addon">PLASE ENTER REGEX</span>
+            <input type="text" class="regex-text form-control" name="regex" placeholder='example : /123/' >
+            <span class="input-group-btn">
+                <input class="regex-submit btn btn-default" type="submit" value="Submit"/>
+            </span>
+        </div>
+    </div>
+</form>
+{% endblock content %}
